@@ -18,9 +18,9 @@ internal class MessagePage : BasePage
         WriteFooter();
     }
 
-    internal static void Show(string title, Exception exception)
+    internal static void Show(Exception exception)
     {
-        WriteHeader(title);
+        WriteHeader("Error");
 
         AnsiConsole.WriteException(exception, ExceptionFormats.NoStackTrace);
 
