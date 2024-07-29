@@ -1,6 +1,6 @@
 ﻿using ShiftsLogger.Data.Entities;
 
-namespace ShiftsLogger.Api.Services;
+namespace ShiftsLogger.Data.Services;
 public interface IShiftService
 {
     Task<bool> CreateAsync(Shift shift);

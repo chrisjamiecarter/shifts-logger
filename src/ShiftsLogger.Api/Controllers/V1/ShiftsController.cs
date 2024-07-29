@@ -2,8 +2,8 @@
 using ShiftsLogger.Api.Contracts.V1;
 using ShiftsLogger.Api.Contracts.V1.Requests;
 using ShiftsLogger.Api.Contracts.V1.Responses;
-using ShiftsLogger.Api.Services;
 using ShiftsLogger.Data.Entities;
+using ShiftsLogger.Data.Services;
 
 namespace ShiftsLogger.Api.Controllers.V1;
 
