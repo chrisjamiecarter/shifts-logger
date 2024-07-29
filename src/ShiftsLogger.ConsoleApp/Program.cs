@@ -16,7 +16,7 @@ internal class Program
 		}
 		catch (Exception exception)
 		{
-            MessagePage.Show("Error", exception);
+            MessagePage.Show(exception);
 		}
 		finally
 		{

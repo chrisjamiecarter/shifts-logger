@@ -13,6 +13,8 @@ internal enum MenuChoice
     CloseApplication,
     [Description("Close page")]
     ClosePage,
-    [Description("View shifts")]
-    ViewShifts
+    [Description("Log a shift")]
+    CreateShift,
+    [Description("View all shifts")]
+    ViewShifts,
 }

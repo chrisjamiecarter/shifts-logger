@@ -1,5 +1,6 @@
 ﻿using ShiftsLogger.ConsoleApp.Engines;
 using ShiftsLogger.ConsoleApp.Enums;
+using ShiftsLogger.ConsoleApp.Models;
 using ShiftsLogger.ConsoleApp.Services;
 using Spectre.Console;
 
@@ -20,18 +21,11 @@ internal class MainMenuPage : BasePage
     private static readonly MenuChoice[] _pageChoices =
     [
         MenuChoice.ViewShifts,
+        MenuChoice.CreateShift,
         MenuChoice.CloseApplication,
     ];
 
     #endregion
-    //#region Constructors
-
-    //public MainMenuPage()// TODO: ShiftController shiftController)
-    //{
-        // TODO: _shiftController = shiftController;
-    //}
-
-    //#endregion
     #region Methods - Internal
 
     internal static void Show()
@@ -45,6 +39,9 @@ internal class MainMenuPage : BasePage
             choice = UserInputService.GetMenuChoice(PromptTitle, _pageChoices);
             switch (choice)
             {
+                case MenuChoice.CreateShift:
+                    CreateShift();
+                    break;
                 case MenuChoice.ViewShifts:
                     ViewShifts();
                     break;
@@ -56,6 +53,30 @@ internal class MainMenuPage : BasePage
 
     #endregion
     #region Methods - Private
+
+    private static void CreateShift()
+    {
+        var request = CreateShiftPage.Show();
+        //{
+        //    StartTime = DateTime.Now.AddHours(-8),
+        //    EndTime = DateTime.Now,
+        //};
+        if (request is null)
+        {
+            return;
+        }
+
+        var result = ShiftApiService.CreateShift(request);
+
+        if (result.Success)
+        {
+            MessagePage.Show("Create Shift", "Shift created successfully");            
+        }
+        else
+        {
+            MessagePage.Show(result.Exception!);
+        }
+    }
 
     private static void ViewShifts()
     {

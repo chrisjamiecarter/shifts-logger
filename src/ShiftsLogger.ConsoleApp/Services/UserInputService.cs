@@ -3,6 +3,7 @@ using ShiftsLogger.ConsoleApp.Enums;
 using ShiftsLogger.ConsoleApp.Models;
 using Spectre.Console;
 using ShiftsLogger.Extensions;
+using System.ComponentModel.DataAnnotations;
 
 namespace ShiftsLogger.ConsoleApp.Services;
 
@@ -17,6 +18,38 @@ internal static partial class UserInputService
 
     #endregion
     #region Methods - Internal
+
+    internal static DateTime? GetShiftStartDateTime(string prompt, string format)
+    {
+        var dateTimeString = AnsiConsole.Prompt(
+            new TextPrompt<string>(prompt)
+            .PromptStyle("blue")
+            .ValidationErrorMessage($"[red]Invalid start time![/] Enter in the required format: [blue]{format}[/]")
+            .Validate(input =>
+            {
+                return (input == "0" || DateTime.TryParseExact(input, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out _))
+                ? Spectre.Console.ValidationResult.Success()
+                : Spectre.Console.ValidationResult.Error();
+            }));
+
+        return dateTimeString == "0" ? null : DateTime.ParseExact(dateTimeString, format, CultureInfo.InvariantCulture, DateTimeStyles.None);
+    }
+
+    internal static DateTime? GetShiftEndDateTime(string prompt, string format, DateTime startDateTime)
+    {
+        var dateTimeString = AnsiConsole.Prompt(
+            new TextPrompt<string>(prompt)
+            .PromptStyle("blue")
+            .ValidationErrorMessage($"[red]Invalid end time![/] Enter in the required format: [blue]{format}[/]. End time must be after the start time.")
+            .Validate(input =>
+            {
+                return (input == "0" || IsValidShiftEndDateTime(input, format, startDateTime))
+                ? Spectre.Console.ValidationResult.Success()
+                : Spectre.Console.ValidationResult.Error();
+            }));
+
+        return dateTimeString == "0" ? null : DateTime.ParseExact(dateTimeString, format, CultureInfo.InvariantCulture, DateTimeStyles.None);
+    }
 
     internal static string GetString(string prompt)
     {
@@ -63,6 +96,24 @@ internal static partial class UserInputService
                 .AddChoices(choices)
                 .UseConverter(c => c.GetDescription())
                 );
+    }
+
+    #endregion
+    #region Methods - Private
+
+    private static bool IsValidShiftEndDateTime(string input, string format, DateTime startDateTime)
+    {
+        bool isCorrectDateTimeFormat = DateTime.TryParseExact(input, format, CultureInfo.InvariantCulture, DateTimeStyles.None, out var endDateTime);
+        if (!isCorrectDateTimeFormat)
+        {
+            return false;
+        }
+        else if (endDateTime <= startDateTime)
+        {
+            return false;
+        }
+
+        return true;
     }
 
     #endregion
