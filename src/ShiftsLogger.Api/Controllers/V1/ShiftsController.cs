@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using ShiftsLogger.Api.Contracts.V1;
 using ShiftsLogger.Api.Contracts.V1.Requests;
 using ShiftsLogger.Api.Contracts.V1.Responses;
@@ -74,24 +73,12 @@ public class ShiftsController : ControllerBase
         {
             return BadRequest();
         }
+
         shift.StartTime = request.StartTime;
         shift.EndTime = request.EndTime;
 
-        try
-        {
-            return Ok(_shiftService.UpdateAsync(shift));
-        }
-        catch (DbUpdateConcurrencyException)
-        {
-            if (!DoesShiftExist(shiftId))
-            {
-                return NotFound();
-            }
-            else
-            {
-                throw;
-            }
-        }
+        var updated = await _shiftService.UpdateAsync(shift);
+        return updated ? Ok(shift) : NotFound();
     }
 
     [HttpDelete(ApiRoutes.Shifts.Delete)]
@@ -100,14 +87,6 @@ public class ShiftsController : ControllerBase
         var deleted = await _shiftService.DeleteAsync(shiftId);
 
         return deleted ? NoContent() : NotFound();
-    }
-
-    #endregion
-    #region Methods - Private
-
-    private bool DoesShiftExist(Guid shiftId)
-    {
-        return _shiftService.DoesShiftExist(shiftId);
     }
 
     #endregion
