@@ -17,23 +17,24 @@ internal class MainMenuPage : BasePage
     #endregion
     #region Fields
 
-    private readonly MenuChoice[] _pageChoices =
+    private static readonly MenuChoice[] _pageChoices =
     [
-        MenuChoice.CloseApplication
+        MenuChoice.ViewShifts,
+        MenuChoice.CloseApplication,
     ];
 
     #endregion
-    #region Constructors
+    //#region Constructors
 
-    public MainMenuPage()// TODO: ShiftController shiftController)
-    {
+    //public MainMenuPage()// TODO: ShiftController shiftController)
+    //{
         // TODO: _shiftController = shiftController;
-    }
+    //}
 
-    #endregion
+    //#endregion
     #region Methods - Internal
 
-    internal void Show()
+    internal static void Show()
     {
         var choice = MenuChoice.Default;
 
@@ -44,6 +45,9 @@ internal class MainMenuPage : BasePage
             choice = UserInputService.GetMenuChoice(PromptTitle, _pageChoices);
             switch (choice)
             {
+                case MenuChoice.ViewShifts:
+                    ViewShifts();
+                    break;
                 default:
                     break;
             }
@@ -52,6 +56,16 @@ internal class MainMenuPage : BasePage
 
     #endregion
     #region Methods - Private
+
+    private static void ViewShifts()
+    {
+        var shifts = ShiftApiService.GetShifts();
+
+        var table = TableEngine.GetShiftsTable(shifts);
+
+        MessagePage.Show("View Shifts", table);
+
+    }
 
     #endregion
 }

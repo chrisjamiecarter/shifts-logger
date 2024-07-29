@@ -1,9 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using ShiftsLogger.Api.Configurations;
 using ShiftsLogger.Api.Installers;
-using ShiftsLogger.Api.Services;
 using ShiftsLogger.Data.Contexts;
-using ShiftsLogger.Data.Entities;
 
 namespace ShiftsLogger.Api;
 
@@ -35,7 +33,7 @@ public class Program
             });
         }
 
-        app.UseAuthorization();
+        //app.UseAuthorization();
 
         app.MapControllers();
 

@@ -12,5 +12,7 @@ internal enum MenuChoice
     [Description("Close application")]
     CloseApplication,
     [Description("Close page")]
-    ClosePage
+    ClosePage,
+    [Description("View shifts")]
+    ViewShifts
 }

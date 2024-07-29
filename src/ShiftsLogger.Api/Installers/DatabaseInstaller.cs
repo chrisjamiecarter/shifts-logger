@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ShiftsLogger.Api.Services;
+using ShiftsLogger.Data.Services;
 using ShiftsLogger.Data.Contexts;
 
 namespace ShiftsLogger.Api.Installers;

@@ -1,4 +1,5 @@
-﻿using Spectre.Console;
+﻿using ShiftsLogger.ConsoleApp.Models;
+using Spectre.Console;
 
 namespace ShiftsLogger.ConsoleApp.Engines;
 
@@ -24,21 +25,23 @@ internal class TableEngine
         return table;
     }
 
-    internal static Table GetContactsTable()// TODO: IReadOnlyList<Shift> shifts)
+    internal static Table GetShiftsTable(IReadOnlyList<ShiftDto> shifts)
     {
         var table = new Table
         {
-            // TODO: Caption = new TableTitle($"{shifts.Count} shifts found."),
+            Caption = new TableTitle($"{shifts.Count} shifts found."),
             Expand = true,
         };
 
-        // TODO:
-        //table.AddColumn("ColumnName");
-        
-        //foreach (var x in shifts)
-        //{
-        //    table.AddRow(TODO);
-        //}
+        table.AddColumn("ID");
+        table.AddColumn("Start Time");
+        table.AddColumn("End Time");
+        table.AddColumn("Duration (Hours)");
+
+        foreach (var x in shifts)
+        {
+            table.AddRow(x.ToTableRow());
+        }
 
         return table;
     }

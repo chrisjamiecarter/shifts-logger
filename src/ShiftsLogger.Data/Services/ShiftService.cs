@@ -2,7 +2,7 @@
 using ShiftsLogger.Data.Contexts;
 using ShiftsLogger.Data.Entities;
 
-namespace ShiftsLogger.Api.Services;
+namespace ShiftsLogger.Data.Services;
 
 public class ShiftService : IShiftService
 {

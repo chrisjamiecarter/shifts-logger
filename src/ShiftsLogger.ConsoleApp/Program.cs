@@ -12,9 +12,7 @@ internal class Program
     {
 		try
 		{
-			// TODO.
-            var mainMenuPage = new MainMenuPage();
-            mainMenuPage.Show();
+            MainMenuPage.Show();
 		}
 		catch (Exception exception)
 		{
