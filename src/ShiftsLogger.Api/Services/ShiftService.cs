@@ -40,10 +40,9 @@ public class ShiftService : IShiftService
 
     public async Task<bool> UpdateAsync(Shift shift)
     {
-        _databaseContext.Entry(shift).State = EntityState.Modified;
-
         try
         {
+            _databaseContext.Entry(shift).State = EntityState.Modified;
             var updated = await _databaseContext.SaveChangesAsync();
             return updated > 0;
         }
@@ -63,11 +62,6 @@ public class ShiftService : IShiftService
 
         var deleted = await _databaseContext.SaveChangesAsync();
         return deleted > 0;
-    }
-
-    public bool DoesShiftExist(Guid shiftId)
-    {
-        return _databaseContext.Shift.Any(e => e.Id == shiftId);
     }
 
     #endregion
