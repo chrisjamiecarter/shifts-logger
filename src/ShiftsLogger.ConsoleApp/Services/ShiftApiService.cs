@@ -81,30 +81,6 @@ internal class ShiftApiService
         return output;
     }
 
-    internal static ApiResult DeleteShift(Guid shiftId)
-    {
-        using var client = new RestClient();
-
-        var request = new RestRequest(DeleteApiRoute.Replace("{shiftId}", HttpUtility.UrlEncode(shiftId.ToString())));
-        
-        try
-        {
-            var reponse = client.Execute(request, Method.Delete);
-            if (reponse.StatusCode is HttpStatusCode.NoContent)
-            {
-                return new ApiResult { Success = true };
-            }
-            else
-            {
-                throw new InvalidOperationException($"Invalid HTTP Status Code. Expected: {HttpStatusCode.NoContent}. Actual: {reponse.StatusCode}.");
-            }
-        }
-        catch (Exception exception)
-        {
-            return new ApiResult { Success = false, Exception = exception };
-        }
-    }
-
     internal static IReadOnlyList<ShiftDto> GetShifts()
     {
         IReadOnlyList<ShiftDto> output = [];
@@ -164,35 +140,6 @@ internal class ShiftApiService
         }
 
         return output;
-    }
-
-    internal static ApiResult UpdateShift(UpdateShiftRequest shift)
-    {
-        using var client = new RestClient();
-
-        var request = new RestRequest(UpdateApiRoute.Replace("{shiftId}", HttpUtility.UrlEncode(shift.Id.ToString())));
-        request.AddBody(new
-        {
-            shift.StartTime,
-            shift.EndTime,
-        });
-
-        try
-        {
-            var reponse = client.Execute(request, Method.Put);
-            if (reponse.StatusCode is HttpStatusCode.OK)
-            {
-                return new ApiResult { Success = true };
-            }
-            else
-            {
-                throw new InvalidOperationException($"Invalid HTTP Status Code. Expected: {HttpStatusCode.OK}. Actual: {reponse.StatusCode}.");
-            }
-        }
-        catch (Exception exception)
-        {
-            return new ApiResult { Success = false, Exception = exception };
-        }
     }
 
     #endregion

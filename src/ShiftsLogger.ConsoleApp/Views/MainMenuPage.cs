@@ -129,54 +129,6 @@ internal class MainMenuPage : BasePage
         }
     }
 
-    private static void DeleteShift()
-    {
-        var shifts = ShiftApiService.GetShifts();
-
-        var shift = SelectShiftPage.Show(shifts);
-        if (shift is null)
-        {
-            return;
-        }
-
-        var result = ShiftApiService.DeleteShift(shift.Id);
-        if (result.Success)
-        {
-            MessagePage.Show("Delete Shift", "Shift deleted successfully");
-        }
-        else
-        {
-            MessagePage.Show(result.Exception!);
-        }
-    }
-
-    private static void UpdateShift()
-    {
-        var shifts = ShiftApiService.GetShifts();
-        
-        var shift = SelectShiftPage.Show(shifts);
-        if (shift is null)
-        {
-            return;
-        }
-
-        var request = UpdateShiftPage.Show(shift);
-        if (request is null)
-        {
-            return;
-        }
-
-        var result = ShiftApiService.UpdateShift(request);
-        if (result.Success)
-        {
-            MessagePage.Show("Update Shift", "Shift updated successfully");
-        }
-        else
-        {
-            MessagePage.Show(result.Exception!);
-        }
-    }
-
     private static void ViewShifts()
     {
         var shifts = ShiftApiService.GetShifts();
