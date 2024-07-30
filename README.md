@@ -131,4 +131,4 @@ See the [LICENSE](./LICENSE) file for details.
 For any questions or feedback, please open an issue.
 
 ---
-***Happy Shiftlogging!***
+***Happy Shiftslogging!***
