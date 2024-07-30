@@ -2,6 +2,8 @@
 
 public static class InstallerExtensions
 {
+    #region Methods
+
     public static void InstallServicesInAssembly(this WebApplicationBuilder builder)
     {
         var installers = typeof(Program).Assembly.ExportedTypes.
@@ -12,4 +14,6 @@ public static class InstallerExtensions
 
         installers.ForEach(installer => installer.InstallServices(builder));
     }
+
+    #endregion
 }

@@ -2,6 +2,9 @@
 
 namespace ShiftsLogger.ConsoleApp.Models;
 
+/// <summary>
+/// UI display version of the Shift model.
+/// </summary>
 internal class ShiftDto
 {
     #region Constructors

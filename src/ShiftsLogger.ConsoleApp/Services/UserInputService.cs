@@ -1,9 +1,8 @@
 ﻿using System.Globalization;
 using ShiftsLogger.ConsoleApp.Enums;
 using ShiftsLogger.ConsoleApp.Models;
-using Spectre.Console;
 using ShiftsLogger.Extensions;
-using System.ComponentModel.DataAnnotations;
+using Spectre.Console;
 
 namespace ShiftsLogger.ConsoleApp.Services;
 

@@ -3,11 +3,14 @@ using ShiftsLogger.Data.Entities;
 
 namespace ShiftsLogger.Data.Contexts;
 
+/// <summary>
+/// The context for a database connection.
+/// </summary>
 public class DatabaseContext : DbContext
 {
     #region Constructors
 
-    public DatabaseContext(DbContextOptions<DatabaseContext> options) 
+    public DatabaseContext(DbContextOptions<DatabaseContext> options)
         : base(options)
     {
     }

@@ -7,6 +7,8 @@ namespace ShiftsLogger.Api;
 
 public class Program
 {
+    #region Methods
+
     public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
@@ -33,8 +35,6 @@ public class Program
             });
         }
 
-        //app.UseAuthorization();
-
         app.MapControllers();
 
         // Perform any database migrations.
@@ -47,4 +47,6 @@ public class Program
         
         app.Run();
     }
+
+    #endregion
 }

@@ -6,11 +6,15 @@ using ShiftsLogger.ConsoleApp.Models;
 using ShiftsLogger.ConsoleApp.Views;
 
 namespace ShiftsLogger.ConsoleApp.Services;
+
+/// <summary>
+/// Service to perform calls to the shift api and handle the responses.
+/// </summary>
 internal class ShiftApiService
 {
     #region Constants
 
-    private readonly static string Base = "http://localhost:5000/api/v1";
+    private readonly static string Base = "http://localhost:5240/api/v1";
     private readonly static string CreateApiRoute = @$"{Base}/shifts";
     private readonly static string GetApiRoute = @$"{Base}/shifts";
     private readonly static string GetByIdApiRoute = @$"{Base}/shifts/{{shiftId}}";
@@ -60,7 +64,7 @@ internal class ShiftApiService
         using var client = new RestClient();
 
         var request = new RestRequest(DeleteApiRoute.Replace("{shiftId}", HttpUtility.UrlEncode(shiftId.ToString())));
-        
+
         try
         {
             var reponse = client.Execute(request, Method.Delete);
@@ -88,7 +92,7 @@ internal class ShiftApiService
         using var client = new RestClient();
 
         var request = new RestRequest(GetApiRoute);
-        
+
         try
         {
             var reponse = client.Execute(request, Method.Get);
@@ -106,7 +110,7 @@ internal class ShiftApiService
             MessagePage.Show(exception);
         }
 
-        return output;        
+        return output;
     }
 
     internal static bool UpdateShift(UpdateShiftRequest shift)

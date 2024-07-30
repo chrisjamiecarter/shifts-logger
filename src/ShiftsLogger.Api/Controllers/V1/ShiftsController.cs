@@ -7,6 +7,9 @@ using ShiftsLogger.Data.Services;
 
 namespace ShiftsLogger.Api.Controllers.V1;
 
+/// <summary>
+/// Controls the interactions between the shift api and the shift database.
+/// </summary>
 [ApiController]
 public class ShiftsController : ControllerBase
 {
@@ -55,7 +58,7 @@ public class ShiftsController : ControllerBase
     [HttpGet(ApiRoutes.Shifts.GetById)]
     public async Task<ActionResult<Shift>> GetShiftAsync([FromRoute] Guid shiftId)
     {
-        var shift = await _shiftService.ReturnByIdAsync(shiftId); 
+        var shift = await _shiftService.ReturnByIdAsync(shiftId);
 
         if (shift == null)
         {
