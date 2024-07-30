@@ -44,6 +44,8 @@ Entity Framework will handle the database creation for you.
 The web api application will handle the performing of any created database
 migrations.
 
+The web api application should be started up before the console application.
+
 ### Prerequisites
 
 - .NET 8 SDK installed on your system.
