@@ -67,14 +67,61 @@ internal class MainMenuPage : BasePage
         }
 
         var result = ShiftApiService.CreateShift(request);
-
-        if (result.Success)
+        if (result)
         {
-            MessagePage.Show("Create Shift", "Shift created successfully");            
+            MessagePage.Show("Create Shift", "Shift created successfully.");
         }
         else
         {
-            MessagePage.Show(result.Exception!);
+            MessagePage.Show("Create Shift", "Failed to create shift.");
+        }
+    }
+
+    private static void DeleteShift()
+    {
+        var shifts = ShiftApiService.GetShifts();
+        
+        var shift = SelectShiftPage.Show(shifts);
+        if (shift is null)
+        {
+            return;
+        }
+
+        var result = ShiftApiService.DeleteShift(shift.Id);
+        if (result)
+        {
+            MessagePage.Show("Delete Shift", "Shift deleted successfully.");
+        }
+        else
+        {
+            MessagePage.Show("Delete Shift", "Failed to delete shift.");
+        }
+    }
+
+    private static void UpdateShift()
+    {
+        var shifts = ShiftApiService.GetShifts();
+        
+        var shift = SelectShiftPage.Show(shifts);
+        if (shift is null)
+        {
+            return;
+        }
+
+        var request = UpdateShiftPage.Show(shift);
+        if (request is null)
+        {
+            return;
+        }
+
+        var result = ShiftApiService.UpdateShift(request);
+        if (result)
+        {
+            MessagePage.Show("Update Shift", "Shift updated successfully.");
+        }
+        else
+        {
+            MessagePage.Show("Update Shift", "Failed to update shift.");
         }
     }
 
@@ -85,7 +132,6 @@ internal class MainMenuPage : BasePage
         var table = TableEngine.GetShiftsTable(shifts);
 
         MessagePage.Show("View Shifts", table);
-
     }
 
     #endregion

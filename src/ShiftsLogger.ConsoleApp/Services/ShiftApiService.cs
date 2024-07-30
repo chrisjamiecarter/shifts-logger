@@ -2,7 +2,7 @@
 using Newtonsoft.Json;
 using RestSharp;
 using ShiftsLogger.ConsoleApp.Models;
-using Spectre.Console;
+using ShiftsLogger.ConsoleApp.Views;
 
 namespace ShiftsLogger.ConsoleApp.Services;
 internal class ShiftApiService
@@ -19,8 +19,10 @@ internal class ShiftApiService
     #endregion
     #region Methods
 
-    internal static ApiResult CreateShift(ShiftRequest shift)
+    internal static bool CreateShift(CreateShiftRequest shift)
     {
+        var output = false;
+
         using var client = new RestClient();
 
         var request = new RestRequest(CreateApiRoute);
@@ -35,7 +37,7 @@ internal class ShiftApiService
             var reponse = client.Execute(request, Method.Post);
             if (reponse.StatusCode is HttpStatusCode.Created)
             {
-                return new ApiResult { Success = true };
+                output = true;
             }
             else
             {
@@ -44,22 +46,96 @@ internal class ShiftApiService
         }
         catch (Exception exception)
         {
-            return new ApiResult { Success = false, Exception = exception };
+            MessagePage.Show(exception);
         }
+
+        return output;
+    }
+
+    internal static bool DeleteShift(Guid shiftId)
+    {
+        var output = false;
+
+        using var client = new RestClient();
+
+        var request = new RestRequest(DeleteApiRoute.Replace("{shiftId}", HttpUtility.UrlEncode(shiftId.ToString())));
+        
+        try
+        {
+            var reponse = client.Execute(request, Method.Delete);
+            if (reponse.StatusCode is HttpStatusCode.NoContent)
+            {
+                output = true;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Invalid HTTP Status Code. Expected: {HttpStatusCode.NoContent}. Actual: {reponse.StatusCode}.");
+            }
+        }
+        catch (Exception exception)
+        {
+            MessagePage.Show(exception);
+        }
+
+        return output;
     }
 
     internal static IReadOnlyList<ShiftDto> GetShifts()
     {
         IReadOnlyList<ShiftDto> output = [];
 
-        using var client = new RestClient(GetApiRoute);
+        using var client = new RestClient();
 
-        var request = new RestRequest();
-        var reponse = client.ExecuteAsync(request);
-
-        if (reponse.Result.StatusCode is System.Net.HttpStatusCode.OK)
+        var request = new RestRequest(GetApiRoute);
+        
+        try
         {
-            output = JsonConvert.DeserializeObject<IReadOnlyList<ShiftDto>>(reponse.Result.Content!)!;
+            var reponse = client.Execute(request, Method.Get);
+            if (reponse.StatusCode is HttpStatusCode.OK)
+            {
+                output = JsonConvert.DeserializeObject<IReadOnlyList<ShiftDto>>(reponse.Content!)!;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Invalid HTTP Status Code. Expected: {HttpStatusCode.OK}. Actual: {reponse.StatusCode}.");
+            }
+        }
+        catch (Exception exception)
+        {
+            MessagePage.Show(exception);
+        }
+
+        return output;        
+    }
+
+    internal static bool UpdateShift(UpdateShiftRequest shift)
+    {
+        var output = false;
+
+        using var client = new RestClient();
+
+        var request = new RestRequest(UpdateApiRoute.Replace("{shiftId}", HttpUtility.UrlEncode(shift.Id.ToString())));
+        request.AddBody(new
+        {
+            shift.StartTime,
+            shift.EndTime,
+        });
+
+        try
+        {
+            var reponse = client.Execute(request, Method.Put);
+            if (reponse.StatusCode is HttpStatusCode.OK)
+            {
+                output = true;
+            }
+            else
+            {
+                throw new InvalidOperationException($"Invalid HTTP Status Code. Expected: {HttpStatusCode.OK}. Actual: {reponse.StatusCode}.");
+            }
+        }
+        catch (Exception exception)
+        {
+            MessagePage.Show(exception);
         }
 
         return output;
