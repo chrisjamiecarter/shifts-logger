@@ -33,7 +33,7 @@ public class ShiftService : IShiftService
 
     public async Task<List<Shift>> ReturnAsync()
     {
-        return await _databaseContext.Shift.ToListAsync();
+        return await _databaseContext.Shift.OrderBy(x => x.StartTime).ThenBy(x => x.EndTime).ToListAsync();
     }
 
     public async Task<Shift?> ReturnByIdAsync(Guid shiftId)
