@@ -8,6 +8,8 @@ namespace ShiftsLogger.ConsoleApp;
 /// </summary>
 internal class Program
 {
+    #region Methods
+
     private static void Main(string[] args)
     {
 		try
@@ -23,4 +25,6 @@ internal class Program
 			Environment.Exit(0);
 		}
     }
+
+    #endregion
 }

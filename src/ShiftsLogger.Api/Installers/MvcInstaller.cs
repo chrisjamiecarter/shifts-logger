@@ -2,8 +2,13 @@
 
 namespace ShiftsLogger.Api.Installers;
 
+/// <summary>
+/// Register the required MVC services to the DI container.
+/// </summary>
 public class MvcInstaller : IInstaller
 {
+    #region Methods
+
     public void InstallServices(WebApplicationBuilder builder)
     {
         // -------------------------------------------------------------------------------------
@@ -25,4 +30,6 @@ public class MvcInstaller : IInstaller
             });
         });
     }
+
+    #endregion
 }

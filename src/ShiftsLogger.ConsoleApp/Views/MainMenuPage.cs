@@ -1,8 +1,6 @@
 ﻿using ShiftsLogger.ConsoleApp.Engines;
 using ShiftsLogger.ConsoleApp.Enums;
-using ShiftsLogger.ConsoleApp.Models;
 using ShiftsLogger.ConsoleApp.Services;
-using Spectre.Console;
 
 namespace ShiftsLogger.ConsoleApp.Views;
 
@@ -84,7 +82,7 @@ internal class MainMenuPage : BasePage
     private static void DeleteShift()
     {
         var shifts = ShiftApiService.GetShifts();
-        
+
         var shift = SelectShiftPage.Show(shifts);
         if (shift is null)
         {
@@ -105,7 +103,7 @@ internal class MainMenuPage : BasePage
     private static void UpdateShift()
     {
         var shifts = ShiftApiService.GetShifts();
-        
+
         var shift = SelectShiftPage.Show(shifts);
         if (shift is null)
         {

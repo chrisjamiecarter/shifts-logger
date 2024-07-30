@@ -4,6 +4,9 @@ using ShiftsLogger.Data.Entities;
 
 namespace ShiftsLogger.Data.Services;
 
+/// <summary>
+/// Service to perform calls to the shift database and handle the responses.
+/// </summary>
 public class ShiftService : IShiftService
 {
     #region Fields
