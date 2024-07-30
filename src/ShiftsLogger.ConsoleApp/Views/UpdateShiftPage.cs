@@ -1,24 +1,31 @@
 ﻿using ShiftsLogger.ConsoleApp.Constants;
+using ShiftsLogger.ConsoleApp.Engines;
 using ShiftsLogger.ConsoleApp.Models;
 using ShiftsLogger.ConsoleApp.Services;
+using Spectre.Console;
 
 namespace ShiftsLogger.ConsoleApp.Views;
 
 /// <summary>
-/// Page which allows users to create a shift entry.
+/// Page which allows users to update a shift entry.
 /// </summary>
-internal class CreateShiftPage : BasePage
+internal class UpdateShiftPage : BasePage
 {
     #region Constants
 
-    private const string PageTitle = "Create Shift";
+    private const string PageTitle = "Update Shift";
 
     #endregion
     #region Methods
 
-    internal static CreateShiftRequest? Show()
+    internal static UpdateShiftRequest? Show(ShiftDto shift)
     {
         WriteHeader(PageTitle);
+
+        // Show user the what is being updated.
+        var table = TableEngine.GetShiftTable(shift);
+        AnsiConsole.Write(table);
+        AnsiConsole.WriteLine();
 
         string dateTimeFormat = StringFormat.DateTime;
 
@@ -39,8 +46,9 @@ internal class CreateShiftPage : BasePage
             return null;
         }
 
-        return new CreateShiftRequest
+        return new UpdateShiftRequest
         {
+            Id = shift.Id,
             StartTime = startTime.Value,
             EndTime = endTime.Value,
         };
