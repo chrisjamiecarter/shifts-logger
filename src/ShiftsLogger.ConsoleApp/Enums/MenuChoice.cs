@@ -15,6 +15,10 @@ internal enum MenuChoice
     ClosePage,
     [Description("Log a shift")]
     CreateShift,
+    [Description("Delete a shift")]
+    DeleteShift,
+    [Description("Update a shift")]
+    UpdateShift,
     [Description("View all shifts")]
     ViewShifts,
 }
