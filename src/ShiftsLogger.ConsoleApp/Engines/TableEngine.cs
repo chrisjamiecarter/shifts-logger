@@ -1,4 +1,5 @@
-﻿using ShiftsLogger.ConsoleApp.Models;
+﻿using ShiftsLogger.ConsoleApp.Constants;
+using ShiftsLogger.ConsoleApp.Models;
 using Spectre.Console;
 
 namespace ShiftsLogger.ConsoleApp.Engines;
@@ -10,17 +11,21 @@ internal class TableEngine
 {
     #region Methods
 
-    internal static Table GetContactTable()// TODO: Shift shift)
+    internal static Table GetShiftTable(ShiftDto shift)
     {
         var table = new Table
         {
             Expand = true,
         };
 
-        // TODO: 
-        //table.AddColumn("ColumnName");
+        table.AddColumn("Start Time");
+        table.AddColumn("End Time");
+        table.AddColumn("Duration (Hours)");
 
-        //table.AddRow(TODO);
+        table.AddRow(
+                shift.StartTime.ToString(StringFormat.DateTime),
+                shift.EndTime.ToString(StringFormat.DateTime),
+                shift.DurationInHours.ToString("F2"));
 
         return table;
     }
@@ -40,7 +45,11 @@ internal class TableEngine
 
         foreach (var x in shifts)
         {
-            table.AddRow(x.ToTableRow());
+            table.AddRow(
+                x.Id.ToString(),
+                x.StartTime.ToString(StringFormat.DateTime),
+                x.EndTime.ToString(StringFormat.DateTime),
+                x.DurationInHours.ToString("F2"));
         }
 
         return table;

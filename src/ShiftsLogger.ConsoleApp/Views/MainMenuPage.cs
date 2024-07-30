@@ -22,6 +22,7 @@ internal class MainMenuPage : BasePage
     [
         MenuChoice.ViewShifts,
         MenuChoice.CreateShift,
+        MenuChoice.UpdateShift,
         MenuChoice.CloseApplication,
     ];
 
@@ -42,6 +43,9 @@ internal class MainMenuPage : BasePage
                 case MenuChoice.CreateShift:
                     CreateShift();
                     break;
+                case MenuChoice.UpdateShift:
+                    UpdateShift();
+                    break;
                 case MenuChoice.ViewShifts:
                     ViewShifts();
                     break;
@@ -57,10 +61,6 @@ internal class MainMenuPage : BasePage
     private static void CreateShift()
     {
         var request = CreateShiftPage.Show();
-        //{
-        //    StartTime = DateTime.Now.AddHours(-8),
-        //    EndTime = DateTime.Now,
-        //};
         if (request is null)
         {
             return;
@@ -71,6 +71,33 @@ internal class MainMenuPage : BasePage
         if (result.Success)
         {
             MessagePage.Show("Create Shift", "Shift created successfully");            
+        }
+        else
+        {
+            MessagePage.Show(result.Exception!);
+        }
+    }
+
+    private static void UpdateShift()
+    {
+        var shifts = ShiftApiService.GetShifts();
+        
+        var shift = SelectShiftPage.Show(shifts);
+        if (shift is null)
+        {
+            return;
+        }
+
+        var request = UpdateShiftPage.Show(shift);
+        if (request is null)
+        {
+            return;
+        }
+
+        var result = ShiftApiService.UpdateShift(request);
+        if (result.Success)
+        {
+            MessagePage.Show("Update Shift", "Shift updated successfully");
         }
         else
         {

@@ -1,4 +1,6 @@
-﻿namespace ShiftsLogger.ConsoleApp.Models;
+﻿using ShiftsLogger.ConsoleApp.Constants;
+
+namespace ShiftsLogger.ConsoleApp.Models;
 
 internal class ShiftDto
 {
@@ -25,15 +27,9 @@ internal class ShiftDto
     #endregion
     #region Methods
 
-    internal string[] ToTableRow()
+    internal string ToSelectionChoice()
     {
-        return 
-        [
-            Id.ToString(),
-            StartTime.ToString(),
-            EndTime.ToString(),
-            DurationInHours.ToString("F2")
-        ];
+        return $"{StartTime.ToString(StringFormat.DateTime)} - {EndTime.ToString(StringFormat.DateTime)} ({DurationInHours:F2} Hours)";
     }
 
     #endregion
