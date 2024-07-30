@@ -61,6 +61,7 @@ migrations.
     - Update the `appsettings.json` file with your database connection string.
 
 3. Build the application:
+    - Navigate to the `.\src\` directory.
     - `dotnet build`
 
 ### Running the Application
